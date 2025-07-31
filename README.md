@@ -14,7 +14,10 @@ This is my personal Neovim configuration built on top of [NvChad](https://github
 - ⚙️ Extended plugin support (Telescope, Treesitter, Mason, and more)
 
 ---
+## 🖼️ Preview
 
+![My Neovim Config Screenshot](./NeoVim.png)
+---
 ## 📦 Setup Instructions
 
 1. **Install [NvChad](https://github.com/NvChad/NvChad):**
