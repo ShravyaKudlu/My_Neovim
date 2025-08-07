@@ -15,6 +15,7 @@ local options = {
         json = { "prettierd" },
         yaml = { "prettierd" },
         markdown = { "prettierd" },
+        java = { "google-java-format" },
     },
 
     formatters = {
@@ -75,6 +76,9 @@ local options = {
         --         "black",
         --     },
         -- },
+        google_java_format = {
+            command = "google-java-format",
+        },
     },
 
     format_on_save = {

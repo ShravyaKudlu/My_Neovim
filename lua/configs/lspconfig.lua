@@ -13,7 +13,7 @@ lspconfig.servers = {
     -- "ols",
     "pyright",
     -- "jd",
-    -- "jdtls",
+    "jdtls",
     "ts_ls",
     "html",
     "tailwindcss",
@@ -30,7 +30,7 @@ local default_servers = {
     "tailwindcss",
     "jsonls",
     "cssls",
-    -- "jdtls",
+    "jdtls",
 }
 
 -- lsps with default config
@@ -117,6 +117,21 @@ lspconfig.ts_ls.setup({
         -- Disable formatting to avoid conflict with prettierd
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
+        on_attach(client, bufnr)
+    end,
+    on_init = on_init,
+    capabilities = capabilities,
+})
+-- if jdtls breaks
+-- cd -rf ~/.local/share/nvim/mason check here, in share folder and delete and reinstall it'll work
+-- Custom setup for jdtls (to disable formatting)
+lspconfig.jdtls.setup({
+    on_attach = function(client, bufnr)
+        -- Disable JDTLS's built-in formatting
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+
+        -- Call the original on_attach to set up other LSP features
         on_attach(client, bufnr)
     end,
     on_init = on_init,
