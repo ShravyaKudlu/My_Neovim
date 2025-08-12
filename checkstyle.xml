@@ -1,0 +1,64 @@
+<!DOCTYPE module PUBLIC "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+    "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+    <property name="severity" value="warning"/>
+    <property name="charset" value="UTF-8"/>
+
+    <module name="TreeWalker">
+
+        <!-- Import Order -->
+        <module name="ImportOrder">
+            <property name="groups" value="java, javax, org, com"/>
+            <property name="ordered" value="true"/>
+            <property name="separated" value="true"/>
+            <property name="option" value="top"/>
+        </module>
+
+        <!-- Basic Style Rules -->
+        <module name="Indentation"/>
+        <module name="TrailingComment"/>
+        <module name="UnusedImports"/>
+        <module name="AvoidStarImport">
+            <property name="severity" value="ignore"/>
+        </module>
+
+        <!-- Length Checks -->
+        <module name="MethodLength">
+            <property name="max" value="50"/>
+        </module>
+        <module name="FileLength">
+            <property name="max" value="2000"/>
+        </module>
+        <module name="LineLength">
+            <property name="max" value="120"/>
+        </module>
+
+        <!-- Naming Conventions -->
+        <module name="TypeName"/> <!-- Classes -->
+        <module name="MethodName"/> <!-- Methods -->
+        <module name="ParameterName"/> <!-- Method Params -->
+        <module name="LocalVariableName"/> <!-- Locals -->
+        <module name="MemberName"/> <!-- Fields -->
+        <module name="ConstantName"/> <!-- Constants -->
+
+        <!-- Braces -->
+        <module name="NeedBraces"/>
+
+        <!-- Javadoc -->
+        <module name="JavadocMethod">
+            <property name="scope" value="public"/>
+            <property name="allowMissingParamTags" value="true"/>
+            <property name="allowMissingThrowsTags" value="true"/>
+        </module>
+        <module name="JavadocType"/>
+        <module name="JavadocVariable"/>
+
+        <!-- Miscellaneous -->
+        <module name="EmptyBlock"/>
+        <module name="FinalClass"/>
+        <module name="FinalParameters"/>
+
+    </module>
+</module>
+

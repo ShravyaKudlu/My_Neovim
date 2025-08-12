@@ -125,16 +125,10 @@ lspconfig.ts_ls.setup({
 -- if jdtls breaks
 -- cd -rf ~/.local/share/nvim/mason check here, in share folder and delete and reinstall it'll work
 -- Custom setup for jdtls (to disable formatting)
-lspconfig.jdtls.setup({
-    on_attach = function(client, bufnr)
-        -- Disable JDTLS's built-in formatting
-        client.server_capabilities.documentFormattingProvider = false
-        client.server_capabilities.documentRangeFormattingProvider = false
-
-        -- Call the original on_attach to set up other LSP features
-        on_attach(client, bufnr)
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "java",
+    callback = function()
+        require("configs.jdtls")
     end,
-    on_init = on_init,
-    capabilities = capabilities,
 })
 -- read :h vim.lsp.config for changing options of lsp servers
