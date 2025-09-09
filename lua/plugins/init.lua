@@ -28,6 +28,17 @@ return {
             require("configs.mason-lspconfig")
         end,
     },
+    {
+        "kawre/leetcode.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "MunifTanjim/nui.nvim",
+        },
+        cmd = { "Leet" },
+        opts = {
+            lang = "python",
+        },
+    },
 
     {
         "mfussenegger/nvim-lint",
@@ -79,5 +90,34 @@ return {
                 exclude = { ".env" },
             },
         },
+    },
+    {
+        "github/copilot.vim",
+        event = "InsertEnter",
+        cmd = {
+            "Copilot",
+            "CopilotEnable",
+            "CopilotDisable",
+            "CopilotPanel",
+            "CopilotStatus",
+        },
+        config = function()
+            vim.g.copilot_no_tab_map = true
+        end,
+    },
+    {
+        "mfussenegger/nvim-jdtls",
+        ft = { "java" },
+    },
+    {
+        "elmcgill/springboot-nvim",
+        ft = { "java" },
+        dependencies = {
+            "neovim/nvim-lspconfig",
+            "mfussenegger/nvim-jdtls",
+        },
+        config = function()
+            require("springboot-nvim").setup({})
+        end,
     },
 }

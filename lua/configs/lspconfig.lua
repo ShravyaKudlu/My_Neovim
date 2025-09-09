@@ -12,13 +12,12 @@ lspconfig.servers = {
     -- "hls",
     -- "ols",
     "pyright",
-    -- "jd",
-    "jdtls",
     "ts_ls",
     "html",
     "tailwindcss",
     "jsonls",
     "cssls",
+    "jdtls",
 }
 
 -- list of servers configured with default config.
@@ -129,6 +128,11 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = "java",
     callback = function()
         require("configs.jdtls")
+        vim.bo.expandtab = true
+        vim.bo.shiftwidth = 2
+        vim.bo.tabstop = 2
+        vim.bo.softtabstop = 2
     end,
 })
+
 -- read :h vim.lsp.config for changing options of lsp servers

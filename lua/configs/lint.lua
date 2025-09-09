@@ -26,14 +26,12 @@ vim.g.checkstyle_config = vim.fn.expand("$HOME")
     .. "/.config/nvim/checkstyle.xml"
 
 -- Define the checkstyle linter
-lint.linters.checkstyle = {
-    cmd = { "checkstyle" },
-    args = {
-        "-c",
-        vim.g.checkstyle_config,
-        "--",
-    },
+lint.linters.checkstyle.args = {
+    "-c",
+    vim.g.checkstyle_config, -- path to config
+    "-", -- read from stdin
 }
+
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
     callback = function()
         lint.try_lint()
