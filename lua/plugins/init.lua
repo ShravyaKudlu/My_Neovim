@@ -120,4 +120,65 @@ return {
             require("springboot-nvim").setup({})
         end,
     },
+    {
+        "stevearc/dressing.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("dressing").setup({
+                input = {
+                    enabled = true,
+                    border = "rounded",
+                    relative = "editor",
+                    anchor = "NW",
+                    prefer_width = 50,
+                    win_options = { winblend = 10 },
+                },
+                select = {
+                    enabled = true,
+                    backend = { "telescope", "builtin" },
+                    builtin = {
+                        border = "rounded",
+                        relative = "editor",
+                        anchor = "NW",
+                        width = 50,
+                        height = 10,
+                    },
+                },
+            })
+        end,
+    },
+
+    {
+        "alessio-vivaldelli/java-creator-nvim",
+        ft = { "java" },
+        event = "VeryLazy",
+        dependencies = {
+            { "nvim-telescope/telescope.nvim", optional = true },
+            { "stevearc/dressing.nvim" }, -- connect ui.select
+        },
+        config = function()
+            require("java-creator-nvim").setup({
+                options = {
+                    java_version = 21,
+                    auto_open = true,
+                    use_notify = false, -- you can enable if you want
+                    custom_src_path = "backend/src/main/java",
+                    src_patterns = { "src/main/java", "src/test/java", "src" },
+                    project_markers = {
+                        "pom.xml",
+                        "build.gradle",
+                        "settings.gradle",
+                        ".project",
+                        "backend",
+                    },
+                    package_selection_style = "hybrid", -- auto/menu/hybrid
+                    notification_timeout = 3000,
+                },
+                keymaps = {}, -- disable plugin defaults
+                default_imports = {
+                    record = { "java.util.*" },
+                },
+            })
+        end,
+    },
 }

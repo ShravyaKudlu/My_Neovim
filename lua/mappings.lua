@@ -74,33 +74,15 @@ map(
     "<Plug>(copilot-dismiss)",
     { desc = "Dismiss Copilot Suggestion" }
 )
-local ok, springboot = pcall(require, "springboot-nvim")
-if ok then
-    map(
-        "n",
-        "<leader>Jr",
-        springboot.boot_run,
-        { desc = "[J]ava [R]un Spring Boot" }
-    )
-    map(
-        "n",
-        "<leader>Jc",
-        springboot.generate_class,
-        { desc = "[J]ava Create [C]lass" }
-    )
-    map(
-        "n",
-        "<leader>Ji",
-        springboot.generate_interface,
-        { desc = "[J]ava Create [I]nterface" }
-    )
-    map(
-        "n",
-        "<leader>Je",
-        springboot.generate_enum,
-        { desc = "[J]ava Create [E]num" }
-    )
-end
+
+-- Map <leader>ca to trigger LSP code actions
+map("n", "<leader>ca", function()
+    vim.lsp.buf.code_action()
+end, { desc = "LSP Code Actions", noremap = true, silent = true })
+
+map("v", "<leader>ca", function()
+    vim.lsp.buf.code_action()
+end, { desc = "LSP Code Actions (visual)", noremap = true, silent = true })
 
 -- ===== Java / JDTLS mappings =====
 map(
@@ -157,3 +139,47 @@ map(
     "<Cmd>lua require('jdtls').update_project_config()<CR>",
     { desc = "[J] Update Config" }
 )
+
+map(
+    "n",
+    "<leader>Ja",
+    "<Cmd>lua vim.lsp.buf.code_action()<CR>",
+    { desc = "[J] Code [A]ctions (generate getters/setters/constructors etc.)" }
+)
+
+map(
+    "v",
+    "<leader>Ja",
+    "<Esc><Cmd>lua vim.lsp.buf.code_action()<CR>",
+    { desc = "[J] Code [A]ctions (visual selection)" }
+)
+
+local ok_spring, springboot = pcall(require, "springboot-nvim")
+if ok_spring then
+    map(
+        "n",
+        "<leader>Jr",
+        springboot.boot_run,
+        { desc = "[J]ava [R]un Spring Boot" }
+    )
+    map(
+        "n",
+        "<leader>Jc",
+        springboot.generate_class,
+        { desc = "[J]ava Create [C]lass" }
+    )
+    map(
+        "n",
+        "<leader>Ji",
+        springboot.generate_interface,
+        { desc = "[J]ava Create [I]nterface" }
+    )
+    map(
+        "n",
+        "<leader>Je",
+        springboot.generate_enum,
+        { desc = "[J]ava Create [E]num" }
+    )
+end
+
+vim.keymap.set("n", "<leader>Jn", "<cmd>JavaNew<CR>", { desc = "[J]ava [N]ew" })

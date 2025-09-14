@@ -29,7 +29,7 @@ local default_servers = {
     "tailwindcss",
     "jsonls",
     "cssls",
-    "jdtls",
+    -- "jdtls",
 }
 
 -- lsps with default config
