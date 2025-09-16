@@ -154,14 +154,14 @@ return {
         event = "VeryLazy",
         dependencies = {
             { "nvim-telescope/telescope.nvim", optional = true },
-            { "stevearc/dressing.nvim" }, -- connect ui.select
+            { "stevearc/dressing.nvim" },
         },
         config = function()
             require("java-creator-nvim").setup({
                 options = {
                     java_version = 21,
                     auto_open = true,
-                    use_notify = false, -- you can enable if you want
+                    use_notify = false,
                     custom_src_path = "backend/src/main/java",
                     src_patterns = { "src/main/java", "src/test/java", "src" },
                     project_markers = {
@@ -171,14 +171,18 @@ return {
                         ".project",
                         "backend",
                     },
-                    package_selection_style = "hybrid", -- auto/menu/hybrid
+                    package_selection_style = "hybrid",
                     notification_timeout = 3000,
                 },
-                keymaps = {}, -- disable plugin defaults
+                keymaps = {},
                 default_imports = {
                     record = { "java.util.*" },
                 },
             })
         end,
+    },
+    {
+        "tpope/vim-fugitive",
+        event = "VeryLazy",
     },
 }

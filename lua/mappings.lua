@@ -2,11 +2,31 @@ require("nvchad.mappings")
 
 local map = vim.keymap.set
 
--- Command mode
-map("n", ";", ":", { desc = "CMD enter command mode" })
+-- Safely unmap default terminal keys
+pcall(vim.keymap.del, "n", "<Space>h")
+pcall(vim.keymap.del, "n", "<Space>v")
+pcall(vim.keymap.del, "t", "<Space>h")
+pcall(vim.keymap.del, "t", "<Space>v")
 
--- Fast escape from insert mode
-map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
+-- Next/prev buffer without tabufline
+map("n", "<TAB>", "<cmd>bnext<CR>", { desc = "Next buffer" })
+map("n", "<S-TAB>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
+map("n", "<leader>x", "<cmd>bd<CR>", { desc = "Close buffer" })
+
+-- Quit al
+
+map(
+    "i",
+    "jk",
+    "<ESC>",
+    { desc = "Escape insert mode", noremap = true, silent = true }
+)
+map(
+    "i",
+    "jj",
+    "<ESC>",
+    { desc = "Escape insert mode", noremap = true, silent = true }
+)
 
 -- Quit all
 map("n", "ZZ", "<cmd>qa<CR>", { desc = "Quit Neovim" })
@@ -83,77 +103,19 @@ end, { desc = "LSP Code Actions", noremap = true, silent = true })
 map("v", "<leader>ca", function()
     vim.lsp.buf.code_action()
 end, { desc = "LSP Code Actions (visual)", noremap = true, silent = true })
-
+-- Map convert Objects to JSON in visual mode
+map(
+    "v", -- visual mode
+    "<A-j>", -- Alt+j
+    function()
+        -- Get start and end line of visual selection
+        local start_line = vim.fn.line("'<")
+        local end_line = vim.fn.line("'>")
+        vim.cmd(start_line .. "," .. end_line .. "AssignmentsToJSON")
+    end,
+    { desc = "Convert selected assignments to JSON" }
+)
 -- ===== Java / JDTLS mappings =====
-map(
-    "n",
-    "<leader>Jo",
-    "<Cmd>lua require('jdtls').organize_imports()<CR>",
-    { desc = "[J] Organize [O] Imports" }
-)
-map(
-    "n",
-    "<leader>Jv",
-    "<Cmd>lua require('jdtls').extract_variable()<CR>",
-    { desc = "[J] Extract [V]ariable" }
-)
-map(
-    "v",
-    "<leader>Jv",
-    "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>",
-    { desc = "[J] Extract [V]ariable (visual)" }
-)
-map(
-    "n",
-    "<leader>JC",
-    "<Cmd>lua require('jdtls').extract_constant()<CR>",
-    { desc = "[J] Extract [C]onstant" }
-)
-map(
-    "v",
-    "<leader>JC",
-    "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>",
-    { desc = "[J] Extract [C]onstant (visual)" }
-)
-map(
-    "n",
-    "<leader>Jt",
-    "<Cmd>lua require('jdtls').test_nearest_method()<CR>",
-    { desc = "[J] Test Method" }
-)
-map(
-    "v",
-    "<leader>Jt",
-    "<Esc><Cmd>lua require('jdtls').test_nearest_method(true)<CR>",
-    { desc = "[J] Test Method (visual)" }
-)
-map(
-    "n",
-    "<leader>JT",
-    "<Cmd>lua require('jdtls').test_class()<CR>",
-    { desc = "[J] Test Class" }
-)
-map(
-    "n",
-    "<leader>Ju",
-    "<Cmd>lua require('jdtls').update_project_config()<CR>",
-    { desc = "[J] Update Config" }
-)
-
-map(
-    "n",
-    "<leader>Ja",
-    "<Cmd>lua vim.lsp.buf.code_action()<CR>",
-    { desc = "[J] Code [A]ctions (generate getters/setters/constructors etc.)" }
-)
-
-map(
-    "v",
-    "<leader>Ja",
-    "<Esc><Cmd>lua vim.lsp.buf.code_action()<CR>",
-    { desc = "[J] Code [A]ctions (visual selection)" }
-)
-
 local ok_spring, springboot = pcall(require, "springboot-nvim")
 if ok_spring then
     map(
