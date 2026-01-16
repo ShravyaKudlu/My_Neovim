@@ -1,7 +1,7 @@
 require("nvchad.mappings")
 
 local map = vim.keymap.set
-
+local opts = { noremap = true, silent = true }
 -- Safely unmap default terminal keys
 pcall(vim.keymap.del, "n", "<Space>h")
 pcall(vim.keymap.del, "n", "<Space>v")
@@ -13,6 +13,7 @@ map("n", "<TAB>", "<cmd>bnext<CR>", { desc = "Next buffer" })
 map("n", "<S-TAB>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
 map("n", "<leader>x", "<cmd>bd<CR>", { desc = "Close buffer" })
 
+map("n", "<leader>u", ":UndotreeToggle<CR>", opts)
 -- Quit al
 
 map(

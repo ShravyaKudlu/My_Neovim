@@ -30,16 +30,29 @@ return {
     },
     {
         "kawre/leetcode.nvim",
+        -- If you are using a local clone, use 'dir'.
+        -- If you want the latest from GitHub, remove 'dir' and use 'branch'.
+        -- dir = vim.fn.stdpath("data") .. "/lazy/leetcode.nvim",
+        branch = "master",
+        lazy = false,
         dependencies = {
+            "nvim-telescope/telescope.nvim",
             "nvim-lua/plenary.nvim",
             "MunifTanjim/nui.nvim",
         },
-        cmd = { "Leet" },
+        config = function(_, opts)
+            require("leetcode").setup(opts)
+        end,
         opts = {
-            lang = "python",
+            arg = "leetcode.com",
+            lang = "python3",
+            image_support = true,
+            storage = {
+                home = "/home/shravyashanbhogue/leetcode",
+                cache = vim.fn.stdpath("cache") .. "/leetcode",
+            },
         },
     },
-
     {
         "mfussenegger/nvim-lint",
         event = { "BufReadPre", "BufNewFile" },
@@ -184,5 +197,28 @@ return {
     {
         "tpope/vim-fugitive",
         event = "VeryLazy",
+    },
+    {
+        "mbbill/undotree",
+        cmd = "UndotreeToggle",
+    },
+    {
+        "3rd/image.nvim",
+        lazy = true,
+        opts = function()
+            require("image").setup({
+                backend = "kitty", -- or "ueberzug"
+                integrations = {
+                    markdown = {
+                        enabled = true,
+                        clear_in_insert_mode = true,
+                        filetypes = { "markdown", "md", "mdx" },
+                        only_render_image_at_cursor = true,
+                        download_remote_images = true,
+                    },
+                    -- you can add more integrations if needed
+                },
+            })
+        end,
     },
 }
