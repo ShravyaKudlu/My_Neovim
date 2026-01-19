@@ -30,9 +30,6 @@ return {
     },
     {
         "kawre/leetcode.nvim",
-        -- If you are using a local clone, use 'dir'.
-        -- If you want the latest from GitHub, remove 'dir' and use 'branch'.
-        -- dir = vim.fn.stdpath("data") .. "/lazy/leetcode.nvim",
         branch = "master",
         lazy = false,
         dependencies = {

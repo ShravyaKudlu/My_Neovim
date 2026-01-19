@@ -1,10 +1,8 @@
+-- ~/.config/nvim/lua/configs/conform.lua
+
 local options = {
     formatters_by_ft = {
         lua = { "stylua" },
-        -- c = { "clang-format" },
-        -- cpp = { "clang-format" },
-        -- go = { "gofumpt", "goimports-reviser", "golines" },
-        -- haskell = { "fourmolu", "stylish-haskell" },
         python = { "isort", "black" },
         javascript = { "prettierd" },
         typescript = { "prettierd" },
@@ -19,36 +17,16 @@ local options = {
     },
 
     formatters = {
-        prettierd = {
-            command = "prettierd",
+        black = {
+            command = "/home/shravyashanbhogue/.venvs/nvim-formatters/bin/black",
+            prepend_args = { "--fast", "--line-length", "80" },
         },
-        prepend_args = {
-            "--single-quote",
-            "--tab-width",
-            "4",
-            "--print-width",
-            "80",
-        }, -- C & C++
-        -- ["clang-format"] = {
-        --     prepend_args = {
-        --         "-style={ \
-        --                 IndentWidth: 4, \
-        --                 TabWidth: 4, \
-        --                 UseTab: Never, \
-        --                 AccessModifierOffset: 0, \
-        --                 IndentAccessModifiers: true, \
-        --                 PackConstructorInitializers: Never}",
-        --     },
-        -- },
-        -- -- Golang
-        -- ["goimports-reviser"] = {
-        --     prepend_args = { "-rm-unused" },
-        -- },
-        -- golines = {
-        --     prepend_args = { "--max-len=80" },
-        -- },
-        -- Lua
+        isort = {
+            command = "/home/shravyashanbhogue/.venvs/nvim-formatters/bin/isort",
+            prepend_args = { "--profile", "black" },
+        },
         stylua = {
+            command = "/home/shravyashanbhogue/.local/share/nvim/mason/bin/stylua",
             prepend_args = {
                 "--column-width",
                 "80",
@@ -58,40 +36,29 @@ local options = {
                 "Spaces",
                 "--indent-width",
                 "4",
-                "--quote-style",
-                "AutoPreferDouble",
             },
         },
-        -- Python
-        black = {
-            prepend_args = {
-                "--fast",
-                "--line-length",
-                "80",
-            },
+        prettierd = {
+            command = "/home/shravyashanbhogue/.local/share/nvim/mason/bin/prettierd",
         },
-        -- isort = {
-        --     prepend_args = {
-        --         "--profile",
-        --         "black",
-        --     },
-        -- },
         google_java_format = {
-            command = "google-java-format",
+            command = "/home/shravyashanbhogue/.local/share/nvim/mason/bin/google-java-format",
         },
     },
 
     format_on_save = {
-        -- These options will be passed to conform.format()
-        timeout_ms = 500,
+        timeout_ms = 1000,
         lsp_fallback = true,
     },
 }
 
 require("conform").setup(options)
-vim.api.nvim_create_autocmd("BufWritePre", {
+
+-- Async formatting after write
+vim.api.nvim_create_autocmd("BufWritePost", {
     pattern = "*",
     callback = function(args)
-        require("conform").format({ bufnr = args.buf })
+        -- async call, will not block or crash on errors
+        require("conform").format({ bufnr = args.buf, async = true })
     end,
 })
